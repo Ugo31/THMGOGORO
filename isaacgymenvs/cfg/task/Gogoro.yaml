@@ -1,0 +1,68 @@
+name: Gogoro
+physics_engine: ${..physics_engine}
+
+env:
+    numEnvs: 1024
+    envSpacing: 5.0
+    maxEpisodeLength: 8000
+    tiltLimit: 10 # In degrees
+    speedRange: [25, 40] # Random speed set at each reset
+    yawRange: [0.0, 25.0] # Limits of the Yaw range commands
+
+sim:
+    dt: 0.02
+    substeps: 2
+    up_axis: "z"
+    use_gpu_pipeline: ${eq:${...pipeline},"gpu"}
+    gravity: [0.0, 0.0, -9.81]
+    physx:
+        num_threads: ${....num_threads}
+        solver_type: ${....solver_type}
+        use_gpu: ${contains:"cuda",${....sim_device}} # set to False to run on CPU
+        num_position_iterations: 4
+        num_velocity_iterations: 1
+        contact_offset: 0.02
+        rest_offset: 0.0
+        bounce_threshold_velocity: 0.2
+        max_depenetration_velocity: 10.0
+        default_buffer_size_multiplier: 5.0
+        max_gpu_contact_pairs: 8388608 # 8*1024*1024
+        num_subscenes: ${....num_subscenes}
+        contact_collection: 0 # 0: CC_NEVER (don't collect contact info), 1: CC_LAST_SUBSTEP (collect only contacts on last substep), 2: CC_ALL_SUBSTEPS (broken - do not use!)
+
+
+joints_pos:
+    l_arm_el_y: 0.2 #-0.844
+    l_arm_wr_r: -0.260
+    head_y: -0.003
+    r_arm_grip: 1.060
+    l_arm_wr_p: -0.076
+    torso_y: -0.052
+    r_arm_sh_r: -1.613
+    l_arm_sh_p1: 0.214
+    l_arm_sh_r: 1.459
+    l_leg_an_r: 0.120
+    l_leg_an_p: -0.390
+    r_leg_hip_p: 1.165
+    r_leg_an_p: 0.354
+    l_arm_wr_y: -0.242
+    l_leg_hip_p: -1.193
+    r_leg_hip_y: 0.277
+    l_leg_hip_r: 0.110
+    l_leg_kn_p: 0.958
+    r_arm_sh_p2: 0.288
+    r_arm_sh_p1: -0.221
+    l_leg_hip_y: -0.095
+    r_leg_hip_r: -0.194
+    l_arm_sh_p2: 0.036
+    r_arm_wr_y: 0.160
+    head_p:     0.002
+    r_arm_wr_p: -0.027
+    r_arm_wr_r: 0.175
+    r_arm_el_y: -0.2 #0.876
+    l_arm_grip: 1.043
+    r_leg_an_r: -0.162
+    r_leg_kn_p: -0.975
+
+task:
+    randomize: False
